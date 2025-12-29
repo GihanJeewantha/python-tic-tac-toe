@@ -1,13 +1,20 @@
 boardboard = [1,2,3,4,5,6,7,8,9]
 
 
-player1_symbol =input("Choose Symbol: \"X or O\" ").upper()
+# Ask Player 1 to choose X or O
+player1_symbol = input('choose your symbol (X or O): ').strip().upper()
 
+# Keep asking enter a valid choice
 while player1_symbol not in ["X", "O"]:
-    if player1_symbol == "X":
-        player2_symbol = "O"
-    else: player2_symbol = "X"
+    print("Invalid choice! Please enter only 'X' or 'O'.")
+    player1_symbol = input('choose your symbol (X or O): ').strip().upper()
+
+# assign the opposite symbol to Player 2
+if player1_symbol == "X":
+    player2_symbol = "O"
+else:
+    player2_symbol = "X"
 
 
-print(player1_symbol)
-print(player2_symbol)
+print(f"Player 1: {player1_symbol}")
+print(f"Player 2: {player2_symbol}")
