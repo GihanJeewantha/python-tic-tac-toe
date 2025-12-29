@@ -28,3 +28,20 @@ print(f"Player 1: {player1_symbol}")
 print(f"Player 2: {player2_symbol}")
 
 display_board()
+
+while True:
+    try:
+    # Ask current player to choose a position (1–9)
+        position = int(input("Enter Position: (1 to 9)"))
+
+        # Check if position is between 1 and 9 (inclusive)
+        if 1 <= position <= 9:
+            print(f"Position is: {position}")
+            break  # Exit the loop if valid
+        else:
+            print("Invalid! Please enter a number between 1 and 9.")
+
+    except ValueError:
+        print("Invalid input! Please enter a number (1-9).")
+
+
