@@ -31,17 +31,23 @@ display_board()
 
 while True:
     try:
-    # Ask current player to choose a position (1–9)
-        position = int(input("Enter Position: (1 to 9)"))
+        position = int(input("Enter position (1–9): "))
 
-        # Check if position is between 1 and 9 (inclusive)
-        if 1 <= position <= 9:
-            print(f"Position is: {position}")
-            break  # Exit the loop if valid
-        else:
-            print("Invalid! Please enter a number between 1 and 9.")
+        if not 1 <= position <= 9:
+            print("Invalid! Choose a number between 1 and 9.")
+            continue
+
+        index = position - 1
+
+        if board[index] in ["X", "O"]:
+            print("Position already taken! Choose another.")
+            continue
+
+        # If we reach here, the position is valid AND free
+        break
 
     except ValueError:
-        print("Invalid input! Please enter a number (1-9).")
+        print("Invalid input! Please enter a number.")
+
 
 
