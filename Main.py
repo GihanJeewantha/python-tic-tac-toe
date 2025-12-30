@@ -18,10 +18,7 @@ while player1_symbol not in ["X", "O"]:
     player1_symbol = input('Player 1, choose your symbol (X or O): ').strip().upper()
 
 # Assign opposite symbol to Player 2
-if player1_symbol == "X":
-    player2_symbol = "O"
-else:
-    player2_symbol = "X"
+player2_symbol = "O" if player1_symbol == "X" else "X"
 
 print(f"Player 1: {player1_symbol}")
 print(f"Player 2: {player2_symbol}")
@@ -29,12 +26,26 @@ print("\nGame Start!\n")
 
 display_board()
 
-# Main game loop - alternates between players
+
+def check_winner(symbol):
+    winning_combinations = [
+        (0, 1, 2), (3, 4, 5), (6, 7, 8),  # rows
+        (0, 3, 6), (1, 4, 7), (2, 5, 8),  # columns
+        (0, 4, 8), (2, 4, 6)             # diagonals
+    ]
+    
+    for combo in winning_combinations:
+        if board[combo[0]] == symbol and board[combo[1]] == symbol and board[combo[2]] == symbol:
+            return True
+    return False
+
+
+# Main game loop
 current_player_symbol = player1_symbol
 current_player_name = "Player 1"
 
 while True:
-    # Ask for a valid move
+    # Get valid move
     while True:
         try:
             position = int(input(f"{current_player_name} ({current_player_symbol}), enter position (1-9): "))
@@ -45,20 +56,29 @@ while True:
 
             index = position - 1
 
-            # Check if position is already taken
             if board[index] in ["X", "O"]:
                 print("Position already taken! Choose another.")
                 continue
 
-            # Valid move - place the symbol
+            # Place symbol
             board[index] = current_player_symbol
             display_board()
-            break  # Exit the input loop
+            break
 
         except ValueError:
             print("Invalid input! Please enter a number.")
 
-    # Switch to the other player
+    # Check for winner
+    if check_winner(current_player_symbol):
+        print(f"🎉 Congratulations! {current_player_name} ({current_player_symbol}) wins! 🎉")
+        break
+
+    # Check for draw (all spots filled)
+    if all(isinstance(cell, str) for cell in board):  # All are X or O (no numbers left)
+        print("It's a draw! Well played both!")
+        break
+
+    # Switch player
     if current_player_symbol == player1_symbol:
         current_player_symbol = player2_symbol
         current_player_name = "Player 2"
